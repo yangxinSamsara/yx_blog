@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Vue3 | 杨欣的前端杂记</title>
+    <meta name="generator" content="VuePress 1.9.7">
+    <link rel="icon" href="/yx_blog/imgs/logo.jpg">
+    <meta name="description" content="欢迎来到杨欣的前端杂记">
+    
+    <link rel="preload" href="/yx_blog/assets/css/0.styles.9025f1a7.css" as="style"><link rel="preload" href="/yx_blog/assets/js/app.e0a8f1e5.js" as="script"><link rel="preload" href="/yx_blog/assets/js/2.95e582b3.js" as="script"><link rel="preload" href="/yx_blog/assets/js/30.fb1f60c1.js" as="script"><link rel="prefetch" href="/yx_blog/assets/js/10.852a3690.js"><link rel="prefetch" href="/yx_blog/assets/js/11.b7d25596.js"><link rel="prefetch" href="/yx_blog/assets/js/12.82266757.js"><link rel="prefetch" href="/yx_blog/assets/js/13.cf1e77f3.js"><link rel="prefetch" href="/yx_blog/assets/js/14.a9e47a7f.js"><link rel="prefetch" href="/yx_blog/assets/js/15.1384f59f.js"><link rel="prefetch" href="/yx_blog/assets/js/16.d5b91b94.js"><link rel="prefetch" href="/yx_blog/assets/js/17.6cab991f.js"><link rel="prefetch" href="/yx_blog/assets/js/18.00aec882.js"><link rel="prefetch" href="/yx_blog/assets/js/19.34034c9c.js"><link rel="prefetch" href="/yx_blog/assets/js/20.8841c49e.js"><link rel="prefetch" href="/yx_blog/assets/js/21.aca8d043.js"><link rel="prefetch" href="/yx_blog/assets/js/22.c40a0d9c.js"><link rel="prefetch" href="/yx_blog/assets/js/23.b24afd47.js"><link rel="prefetch" href="/yx_blog/assets/js/24.be84b6e7.js"><link rel="prefetch" href="/yx_blog/assets/js/25.77357fc0.js"><link rel="prefetch" href="/yx_blog/assets/js/26.8a3d42fc.js"><link rel="prefetch" href="/yx_blog/assets/js/27.70f0fe8a.js"><link rel="prefetch" href="/yx_blog/assets/js/28.c5cf210b.js"><link rel="prefetch" href="/yx_blog/assets/js/29.5ca16a60.js"><link rel="prefetch" href="/yx_blog/assets/js/3.5b12ee6f.js"><link rel="prefetch" href="/yx_blog/assets/js/31.2fbe73e3.js"><link rel="prefetch" href="/yx_blog/assets/js/32.b4d61232.js"><link rel="prefetch" href="/yx_blog/assets/js/33.c87924c5.js"><link rel="prefetch" href="/yx_blog/assets/js/34.70dcd269.js"><link rel="prefetch" href="/yx_blog/assets/js/35.633fb91f.js"><link rel="prefetch" href="/yx_blog/assets/js/4.02bdbb3c.js"><link rel="prefetch" href="/yx_blog/assets/js/5.ce292cd4.js"><link rel="prefetch" href="/yx_blog/assets/js/6.5a41d7cc.js"><link rel="prefetch" href="/yx_blog/assets/js/7.0694149e.js"><link rel="prefetch" href="/yx_blog/assets/js/8.ba0d71a7.js"><link rel="prefetch" href="/yx_blog/assets/js/9.f0236701.js">
+    <link rel="stylesheet" href="/yx_blog/assets/css/0.styles.9025f1a7.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/yx_blog/" class="home-link router-link-active"><img src="/yx_blog/imgs/logo.jpg" alt="杨欣的前端杂记" class="logo"> <span class="site-name can-hide">杨欣的前端杂记</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/yx_blog/" class="nav-link">
+  首页
+</a></div><div class="nav-item"><a href="/yx_blog/vue/" class="nav-link">
+  vue及周边
+</a></div><div class="nav-item"><a href="/yx_blog/about/" class="nav-link">
+  关于我
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="好友链接" class="dropdown-title"><span class="title">好友链接</span> <span class="arrow down"></span></button> <button type="button" aria-label="好友链接" class="mobile-dropdown-title"><span class="title">好友链接</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="https://zhuijing.github.io/" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  曹泽鹏的笔记
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-item"><!----> <a href="https://shikkk.github.io/file/" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  石志凯的技术杂货铺
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-item"><!----> <a href="https://zhangjy1994.github.io/webnotes/" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  张佳宇的笔记
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li></ul></div></div> <!----></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/yx_blog/" class="nav-link">
+  首页
+</a></div><div class="nav-item"><a href="/yx_blog/vue/" class="nav-link">
+  vue及周边
+</a></div><div class="nav-item"><a href="/yx_blog/about/" class="nav-link">
+  关于我
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="好友链接" class="dropdown-title"><span class="title">好友链接</span> <span class="arrow down"></span></button> <button type="button" aria-label="好友链接" class="mobile-dropdown-title"><span class="title">好友链接</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="https://zhuijing.github.io/" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  曹泽鹏的笔记
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-item"><!----> <a href="https://shikkk.github.io/file/" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  石志凯的技术杂货铺
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-item"><!----> <a href="https://zhangjy1994.github.io/webnotes/" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  张佳宇的笔记
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li></ul></div></div> <!----></nav>  <ul class="sidebar-links"><li><section class="sidebar-group depth-0"><a href="/yx_blog/interview/" class="sidebar-heading clickable"><span>前言</span> <!----></a> <ul class="sidebar-links sidebar-group-items"><li><a href="/yx_blog/interview.html" class="sidebar-link">创建博客目的</a></li></ul></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>Interview</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>Html</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>Css</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>JavaScript</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading open"><span>Vue</span> <span class="arrow down"></span></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/yx_blog/views/vue/base.html" class="sidebar-link">vue2.x</a></li><li><a href="/yx_blog/views/vue/vuex.html" class="sidebar-link">Vuex</a></li><li><a href="/yx_blog/views/vue/optimazition.html" class="sidebar-link">vue项目优化</a></li><li><a href="/yx_blog/views/vue/performance-optimize.html" class="sidebar-link">性能优化</a></li><li><a href="/yx_blog/views/vue/vue3.html" aria-current="page" class="active sidebar-link">Vue3</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/yx_blog/views/vue/vue3.html#响应式api" class="sidebar-link">响应式API</a></li><li class="sidebar-sub-header"><a href="/yx_blog/views/vue/vue3.html#响应式侦听" class="sidebar-link">响应式侦听</a></li><li class="sidebar-sub-header"><a href="/yx_blog/views/vue/vue3.html#组合api" class="sidebar-link">组合API</a></li><li class="sidebar-sub-header"><a href="/yx_blog/views/vue/vue3.html#fragment" class="sidebar-link">Fragment</a></li><li class="sidebar-sub-header"><a href="/yx_blog/views/vue/vue3.html#teleport" class="sidebar-link">Teleport</a></li><li class="sidebar-sub-header"><a href="/yx_blog/views/vue/vue3.html#suspense" class="sidebar-link">Suspense</a></li><li class="sidebar-sub-header"><a href="/yx_blog/views/vue/vue3.html#data、mixin和filter" class="sidebar-link">data、mixin和filter</a></li><li class="sidebar-sub-header"><a href="/yx_blog/views/vue/vue3.html#v-model" class="sidebar-link">v-model</a></li><li class="sidebar-sub-header"><a href="/yx_blog/views/vue/vue3.html#v-for和key" class="sidebar-link">v-for和key</a></li><li class="sidebar-sub-header"><a href="/yx_blog/views/vue/vue3.html#v-bind合并" class="sidebar-link">v-bind合并</a></li><li class="sidebar-sub-header"><a href="/yx_blog/views/vue/vue3.html#v-for中ref" class="sidebar-link">v-for中ref</a></li><li class="sidebar-sub-header"><a href="/yx_blog/views/vue/vue3.html#v-for和v-if优先级" class="sidebar-link">v-for和v-if优先级</a></li></ul></li><li><a href="/yx_blog/views/vue/vuekey.html" class="sidebar-link">为什么 Vue 中不要用 index 作为 key？（diff 算法详解）</a></li></ul></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>React</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>Webpack</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>小程序</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>浏览器&amp;Http</span> <span class="arrow right"></span></p> <!----></section></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="vue3"><a href="#vue3" class="header-anchor">#</a> Vue3</h1> <p>Vue3.0从20年九月发布第一个One Piece版本，到现在一直在更新优化；中文版的官方文档也已经放出；那么作为终端用户的我们来看下Vue3新增了哪些功能和特性。</p> <p>尤大大在B站直播时分享了Vue3.0的几个亮点：</p> <ul><li>Performance：性能优化</li> <li>Tree-shaking support：支持摇树优化</li> <li>Composition API：组合API</li> <li>Fragment，Teleport，Suspense：新增的组件</li> <li>Better TypeScript support：更好的TypeScript支持</li> <li>Custom Renderer API：自定义渲染器</li></ul> <p>在性能方面，对比Vue2.x，性能提升了1.3~2倍左右；打包后的体积也更小了，如果单单写一个HelloWorld进行打包，只有13.5kb；加上所有运行时特性，也不过22.5kb。</p> <p>那么作为终端用户的我们，在开发时，和Vue2.x有什么不同呢？<code>Talk is cheap</code>，我们还是来看代码。</p> <h1 id="tree-shaking"><a href="#tree-shaking" class="header-anchor">#</a> Tree-shaking</h1> <p>Vue3最重要的变化之一就是引入了Tree-Shaking，Tree-Shaking带来的bundle体积更小是显而易见的。在2.x版本中，很多函数都挂载在全局Vue对象上，比如nextTick、nextTick、nextTick、set等函数，因此虽然我们可能用不到，但打包时只要引入了vue这些全局函数仍然会打包进bundle中。</p> <p>而在Vue3中，所有的API都通过ES6模块化的方式引入，这样就能让webpack或rollup等打包工具在打包时对没有用到API进行剔除，最小化bundle体积；我们在main.js中就能发现这样的变化：</p> <div class="language- extra-class"><pre class="language-text"><code>//src/main.js
+import { createApp } from &quot;vue&quot;;
+import App from &quot;./App.vue&quot;;
+import router from &quot;./router&quot;;
+
+const app = createApp(App);
+app.use(router).mount(&quot;#app&quot;);
+</code></pre></div><p>创建app实例方式从原来的<code>new Vue()</code>变为通过createApp函数进行创建；不过一些核心的功能比如virtualDOM更新算法和响应式系统无论如何都是会被打包的；这样带来的变化就是以前在全局配置的组件（Vue.component）、指令（Vue.directive）、混入（Vue.mixin）和插件（Vue.use）等变为直接挂载在实例上的方法；我们通过创建的实例来调用，带来的好处就是一个应用可以有多个Vue实例，不同实例之间的配置也不会相互影响：</p> <div class="language- extra-class"><pre class="language-text"><code>const app = createApp(App)
+app.use(/* ... */)
+app.mixin(/* ... */)
+app.component(/* ... */)
+app.directive(/* ... */)
+</code></pre></div><p>因此Vue2.x的以下全局API也需要改为ES6模块化引入：</p> <ul><li>Vue.nextTick</li> <li>Vue.observable不再支持，改为<code>reactive</code></li> <li>Vue.version</li> <li>Vue.compile (仅全构建)</li> <li>Vue.set (仅兼容构建)</li> <li>Vue.delete (仅兼容构建)</li></ul> <p>除此之外，vuex和vue-router也都使用了Tree-Shaking进行了改进，不过api的语法改动不大：</p> <div class="language- extra-class"><pre class="language-text"><code>//src/store/index.js
+import { createStore } from &quot;vuex&quot;;
+
+export default createStore({
+  state: {},
+  mutations: {},
+  actions: {},
+  modules: {},
+});
+//src/router/index.js
+import { createRouter, createWebHistory } from &quot;vue-router&quot;;
+
+const router = createRouter({
+  history: createWebHistory(process.env.BASE_URL),
+  routes,
+});
+</code></pre></div><h1 id="生命周期函数"><a href="#生命周期函数" class="header-anchor">#</a> 生命周期函数</h1> <p>我们都知道，在Vue2.x中有8个生命周期函数：</p> <ul><li>beforeCreate</li> <li>created</li> <li>beforeMount</li> <li>mounted</li> <li>beforeUpdate</li> <li>updated</li> <li>beforeDestroy</li> <li>destroyed</li></ul> <p>在vue3中，新增了一个<code>setup</code>生命周期函数，setup执行的时机是在<code>beforeCreate</code>生命函数之前执行，因此在这个函数中是不能通过<code>this</code>来获取实例的；同时为了命名的统一，将<code>beforeDestroy</code>改名为<code>beforeUnmount</code>，<code>destroyed</code>改名为<code>unmounted</code>，因此vue3有以下生命周期函数：</p> <ul><li>beforeCreate（建议使用setup代替）</li> <li>created（建议使用setup代替）</li> <li>setup</li> <li>beforeMount</li> <li>mounted</li> <li>beforeUpdate</li> <li>updated</li> <li>beforeUnmount</li> <li>unmounted</li></ul> <p>同时，vue3新增了生命周期钩子，我们可以通过在生命周期函数前加<code>on</code>来访问组件的生命周期，我们可以使用以下生命周期钩子：</p> <ul><li>onBeforeMount</li> <li>onMounted</li> <li>onBeforeUpdate</li> <li>onUpdated</li> <li>onBeforeUnmount</li> <li>onUnmounted</li> <li>onErrorCaptured</li> <li>onRenderTracked</li> <li>onRenderTriggered</li></ul> <p>那么这些钩子函数如何来进行调用呢？我们在setup中挂载生命周期钩子，当执行到对应的生命周期时，就调用对应的钩子函数：</p> <div class="language- extra-class"><pre class="language-text"><code>import { onBeforeMount, onMounted } from &quot;vue&quot;;
+export default {
+  setup() {
+    console.log(&quot;----setup----&quot;);
+    onBeforeMount(() =&gt; {
+      // beforeMount代码执行
+    });
+    onMounted(() =&gt; {
+      // mounted代码执行
+    });
+  },
+}
+</code></pre></div><h1 id="新增的功能"><a href="#新增的功能" class="header-anchor">#</a> 新增的功能</h1> <p>说完生命周期，下面就是我们期待的Vue3新增加的那些功能。</p> <h2 id="响应式api"><a href="#响应式api" class="header-anchor">#</a> 响应式API</h2> <p>我们可以使用<code>reactive</code>来为JS对象创建响应式状态：</p> <div class="language- extra-class"><pre class="language-text"><code>import { reactive, toRefs } from &quot;vue&quot;;
+const user = reactive({
+  name: 'Vue2',
+  age: 18,
+});
+user.name = 'Vue3'
+</code></pre></div><p>reactive相当于Vue2.x中的<code>Vue.observable</code>。</p> <blockquote><p>reactive函数只接收object和array等复杂数据类型。</p></blockquote> <p>对于一些基本数据类型，比如字符串和数值等，我们想要让它变成响应式，我们当然也可以通过reactive函数创建对象的方式，但是Vue3提供了另一个函数<code>ref</code>：</p> <div class="language- extra-class"><pre class="language-text"><code>import { ref } from &quot;vue&quot;;
+const num = ref(0);
+const str = ref(&quot;&quot;);
+const male = ref(true);
+
+num.value++;
+console.log(num.value);
+
+str.value = &quot;new val&quot;;
+console.log(str.value);
+
+male.value = false;
+console.log(male.value);
+</code></pre></div><p>ref返回的响应式对象是只包含一个名为value参数的RefImpl对象，在js中获取和修改都是通过它的value属性；但是在模板中被渲染时，自动展开内部的值，因此不需要在模板中追加<code>.value</code>。</p> <div class="language- extra-class"><pre class="language-text"><code>&lt;template&gt;
+  &lt;div&gt;
+    &lt;span&gt;{{ count }}&lt;/span&gt;
+    &lt;button @click=&quot;count ++&quot;&gt;Increment count&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+  import { ref } from 'vue'
+  export default {
+    setup() {
+      const count = ref(0)
+      return {
+        count
+      }
+    }
+  }
+&lt;/script&gt;
+</code></pre></div><p>reactive主要负责复杂数据结构，而ref主要处理基本数据结构；但是很多童鞋就会误解ref只能处理基本数据，ref本身也是能处理对象和数组的：</p> <div class="language- extra-class"><pre class="language-text"><code>import { ref } from &quot;vue&quot;;
+
+const obj = ref({
+  name: &quot;qwe&quot;,
+  age: 1,
+});
+setTimeout(() =&gt; {
+  obj.value.name = &quot;asd&quot;;
+}, 1000);
+
+const list = ref([1, 2, 3, 4, 6]);
+setTimeout(() =&gt; {
+  list.value.push(7);
+}, 2000);
+</code></pre></div><p>当我们处理一些大型响应式对象的property时，我们很希望使用ES6的解构来获取我们想要的值：</p> <div class="language- extra-class"><pre class="language-text"><code>let book = reactive({  name: 'Learn Vue',  year: 2020,  title: 'Chapter one'})let {  name,} = bookname = 'new Learn'// Learn Vueconsole.log(book.name);
+</code></pre></div><p>但是很遗憾，这样会消除它的响应式；对于这种情况，我们可以将响应式对象转换为一组ref，这些ref将保留与源对象的响应式关联：</p> <div class="language- extra-class"><pre class="language-text"><code>let book = reactive({  name: 'Learn Vue',  year: 2020,  title: 'Chapter one'})let {  name,} = toRefs(book)// 注意这里解构出来的name是ref对象// 需要通过value来取值赋值name.value = 'new Learn'// new Learnconsole.log(book.name);
+</code></pre></div><p>对于一些只读数据，我们希望防止它发生任何改变，可以通过<code>readonly</code>来创建一个只读的对象：</p> <div class="language- extra-class"><pre class="language-text"><code>import { reactive, readonly } from &quot;vue&quot;;let book = reactive({  name: 'Learn Vue',  year: 2020,  title: 'Chapter one'})const copy = readonly(book);//Set operation on key &quot;name&quot; failed: target is readonly.copy.name = &quot;new copy&quot;;
+</code></pre></div><p>有时我们需要的值依赖于其他值的状态，在vue2.x中我们使用<code>computed函数</code>来进行计算属性，在vue3中将computed功能进行了抽离，它接受一个getter函数，并为getter返回的值创建了一个<strong>不可变</strong>的响应式ref对象：</p> <div class="language- extra-class"><pre class="language-text"><code>const num = ref(0);const double = computed(() =&gt; num.value * 2);num.value++;// 2console.log(double.value);// Warning: computed value is readonlydouble.value = 4
+</code></pre></div><p>或者我们也可以使用get和set函数创建一个可读写的ref对象：</p> <div class="language- extra-class"><pre class="language-text"><code>const num = ref(0);const double = computed({  get: () =&gt; num.value * 2,  set: (val) =&gt; (num.value = val / 2),});num.value++;// 2console.log(double.value);double.value = 8// 4console.log(num.value);
+</code></pre></div><h2 id="响应式侦听"><a href="#响应式侦听" class="header-anchor">#</a> 响应式侦听</h2> <p>和computed相对应的就是watch，computed是多对一的关系，而watch则是一对多的关系；vue3也提供了两个函数来侦听数据源的变化：watch和watchEffect。</p> <p>我们先来看下watch，它的用法和组件的watch选项用法完全相同，它需要监听某个数据源，然后执行具体的回调函数，我们首先看下它监听单个数据源的用法：</p> <div class="language- extra-class"><pre class="language-text"><code>import { reactive, ref, watch } from &quot;vue&quot;;const state = reactive({  count: 0,});//侦听时返回值得getter函数watch(  () =&gt; state.count,  (count, prevCount) =&gt; {    // 1 0    console.log(count, prevCount);  });state.count++;const count = ref(0);//直接侦听refwatch(count, (count, prevCount) =&gt; {  // 2 0  console.log(count, prevCount, &quot;watch&quot;);});count.value = 2;
+</code></pre></div><p>我们也可以把多个值放在一个数组中进行侦听，最后的值也以数组形式返回：</p> <div class="language- extra-class"><pre class="language-text"><code>const state = reactive({  count: 1,});const count = ref(2);watch([() =&gt; state.count, count], (newVal, oldVal) =&gt; {  //[3, 2]  [1, 2]  //[3, 4]  [3, 2]  console.log(newVal, oldVal);});state.count = 3;count.value = 4;
+</code></pre></div><p>如果我们来侦听一个深度嵌套的对象属性变化时，需要设置<code>deep:true</code>：</p> <div class="language- extra-class"><pre class="language-text"><code>const deepObj = reactive({  a: {    b: {      c: &quot;hello&quot;,    },  },});watch(  () =&gt; deepObj,  (val, old) =&gt; {    // new hello new hello    console.log(val.a.b.c, old.a.b.c);  },  { deep: true });deepObj.a.b.c = &quot;new hello&quot;;
+</code></pre></div><p>最后的打印结果可以发现都是改变后的值，这是因为侦听一个响应式对象始终返回该对象的引用，因此我们需要对值进行深拷贝：</p> <div class="language- extra-class"><pre class="language-text"><code>import _ from &quot;lodash&quot;;const deepObj = reactive({  a: {    b: {      c: &quot;hello&quot;,    },  },});watch(  () =&gt; _.cloneDeep(deepObj),  (val, old) =&gt; {    // new hello hello    console.log(val.a.b.c, old.a.b.c);  },  { deep: true });deepObj.a.b.c = &quot;new hello&quot;;
+</code></pre></div><p>一般侦听都会在组件销毁时自动停止，但是有时候我们想在组件销毁前手动的方式进行停止，可以调用watch返回的stop函数进行停止：</p> <div class="language- extra-class"><pre class="language-text"><code>const count = ref(0);const stop = watch(count, (count, prevCount) =&gt; {  // 不执行  console.log(count, prevCount);});setTimeout(()=&gt;{  count.value = 2;}, 1000);// 停止watchstop();
+</code></pre></div><p>还有一个函数watchEffect也可以用来进行侦听，但是都已经有watch了，这个watchEffect和watch有什么区别呢？他们的用法主要有以下几点不同：</p> <ol><li><div class="language- extra-class"><pre class="language-text"><code>watchEffect不需要手动传入依赖
+</code></pre></div></li> <li><div class="language- extra-class"><pre class="language-text"><code>每次初始化时watchEffect都会执行一次回调函数来自动获取依赖
+</code></pre></div></li> <li><div class="language- extra-class"><pre class="language-text"><code>watchEffect无法获取到原值，只能得到变化后的值
+</code></pre></div></li></ol> <div class="language- extra-class"><pre class="language-text"><code>import { reactive, ref, watch, watchEffect } from &quot;vue&quot;;const count = ref(0);const state = reactive({  year: 2021,});watchEffect(() =&gt; {  console.log(count.value);  console.log(state.year);});setInterval(() =&gt; {  count.value++;  state.year++;}, 1000);
+</code></pre></div><p>watchEffect会在页面加载时自动执行一次，追踪响应式依赖；在加载后定时器每隔1s执行时，watchEffect都会监听到数据的变化自动执行，每次执行都是获取到变化后的值。</p> <h2 id="组合api"><a href="#组合api" class="header-anchor">#</a> 组合API</h2> <p>Composition API（组合API）也是Vue3中最重要的一个功能了，之前的2.x版本采用的是<code>Options API</code>（选项API），即官方定义好了写法：data、computed、methods，需要在哪里写就在哪里写，这样带来的问题就是随着功能增加，代码也越来复杂，我们看代码需要上下反复横跳：</p> <p><img src="https://mmbiz.qpic.cn/mmbiz_png/zPh0erYjkib2iaLOS83CHnNZONNAZcjoiby33Xozl8ciaO5iatvyudKSPTxXqNKdDgWKLlDUj6byOtNXFPxzJKZAwLQ/640?wx_fmt=png&amp;tp=webp&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1" alt="图片">Composition API对比</p> <blockquote><p>上图中，一种颜色代表一个功能，我们可以看到<code>Options API</code>的功能代码比较分散；<code>Composition API</code>则可以将同一个功能的逻辑，组织在一个函数内部，利于维护。</p></blockquote> <p>我们首先来看下之前Options API的写法：</p> <div class="language- extra-class"><pre class="language-text"><code>export default {  components: {},  data() {},  computed: {},  watch: {},  mounted() {},}
+</code></pre></div><p><code>Options API</code>就是将同一类型的东西放在同一个选项中，当我们的数据比较少的时候，这样的组织方式是比较清晰的；但是随着数据增多，我们维护的功能点会涉及到多个data和methods，但是我们无法感知哪些data和methods是需要涉及到的，经常需要来回切换查找，甚至是需要理解其他功能的逻辑，这也导致了组件难以理解和阅读。</p> <p>而<code>Composition API</code>做的就是把同一功能的代码放到一起维护，这样我们需要维护一个功能点的时候，不用去关心其他的逻辑，只关注当前的功能；<code>Composition API</code>通过<code>setup</code>选项来组织代码：</p> <div class="language- extra-class"><pre class="language-text"><code>export default {  setup(props, context) {}};
+</code></pre></div><p>我们看到这里它接收了两个参数props和context，props就是父组件传入的一些数据，context是一个上下文对象，是从2.x暴露出来的一些属性：</p> <ul><li>attrs</li> <li>slots</li> <li>emit</li></ul> <blockquote><p>注：props的数据也需要通过toRefs解构，否则响应式数据会失效。</p></blockquote> <p>我们通过一个Button按钮来看下setup具体的用法：</p> <p><img src="https://mmbiz.qpic.cn/mmbiz_jpg/zPh0erYjkib2iaLOS83CHnNZONNAZcjoibysfeXicENtiajK1qSsKZtxUB0oar8VhFGpxNEk2CeA0Hto1ibXLEr8DiaGg/640?wx_fmt=jpeg&amp;tp=webp&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1" alt="图片">举个栗子</p> <div class="language- extra-class"><pre class="language-text"><code>&lt;template&gt;  &lt;div&gt;{{ state.count }} * 2 = {{ double }}&lt;/div&gt;  &lt;div&gt;{{ num }}&lt;/div&gt;  &lt;div @click=&quot;add&quot;&gt;Add&lt;/div&gt;&lt;/template&gt;&lt;script&gt;import { reactive, computed, ref } from &quot;vue&quot;;export default {  name: &quot;Button&quot;,  setup() {    const state = reactive({      count: 1,    });    const num = ref(2);    function add() {      state.count++;      num.value += 10;    }    const double = computed(() =&gt; state.count * 2);    return {      state,      double,      num,      add,    };  },};&lt;/script&gt;
+</code></pre></div><p>很多童鞋可能就有疑惑了，这跟我在data和methods中写没什么区别么，不就是把他们放到一起么？我们可以将<code>setup</code>中的功能进行提取分割成一个一个独立函数，每个函数还可以在不同的组件中进行逻辑复用：</p> <div class="language- extra-class"><pre class="language-text"><code>export default {  setup() {    const { networkState } = useNetworkState();    const { user } = userDeatil();    const { list } = tableData();    return {      networkState,      user,      list,    };  },};function useNetworkState() {}function userDeatil() {}function tableData() {}
+</code></pre></div><h2 id="fragment"><a href="#fragment" class="header-anchor">#</a> Fragment</h2> <p>所谓的Fragment，就是片段；在vue2.x中，要求每个模板必须有一个根节点，所以我们代码要这样写：</p> <div class="language- extra-class"><pre class="language-text"><code>&lt;template&gt;  &lt;div&gt;    &lt;span&gt;&lt;/span&gt;    &lt;span&gt;&lt;/span&gt;  &lt;/div&gt;&lt;/template&gt;
+</code></pre></div><p>或者在Vue2.x中还可以引入<code>vue-fragments</code>库，用一个虚拟的fragment代替div；在React中，解决方法是通过的一个<code>React.Fragment</code>标签创建一个虚拟元素；在Vue3中我们可以直接不需要根节点：</p> <div class="language- extra-class"><pre class="language-text"><code>&lt;template&gt;    &lt;span&gt;hello&lt;/span&gt;    &lt;span&gt;world&lt;/span&gt;&lt;/template&gt;
+</code></pre></div><p>这样就少了很多没有意义的div元素。</p> <h2 id="teleport"><a href="#teleport" class="header-anchor">#</a> Teleport</h2> <p>Teleport翻译过来就是传送、远距离传送的意思；顾名思义，它可以将插槽中的元素或者组件传送到页面的其他位置：</p> <p><img src="https://mmbiz.qpic.cn/mmbiz_jpg/zPh0erYjkib2iaLOS83CHnNZONNAZcjoiby2W0zpOfBZRLMppaqzq4sy0fRDyq68MrEWuJkK6wlicN11U7GG7QwqhA/640?wx_fmt=jpeg&amp;tp=webp&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1" alt="图片">传送门游戏</p> <p>在React中可以通过<code>createPortal</code>函数来创建需要传送的节点；本来尤大大想起名叫<code>Portal</code>，但是H5原生的<code>Portal标签</code>也在计划中，虽然有一些安全问题，但是为了避免重名，因此改成<code>Teleport</code>。</p> <p>Teleport一个常见的使用场景，就是在一些嵌套比较深的组件来转移模态框的位置。虽然在逻辑上模态框是属于该组件的，但是在样式和DOM结构上，嵌套层级后较深后不利于进行维护（z-index等问题）；因此我们需要将其进行剥离出来：</p> <div class="language- extra-class"><pre class="language-text"><code>&lt;template&gt;  &lt;button @click=&quot;showDialog = true&quot;&gt;打开模态框&lt;/button&gt;  &lt;teleport to=&quot;body&quot;&gt;    &lt;div class=&quot;modal&quot; v-if=&quot;showDialog&quot; style=&quot;position: fixed&quot;&gt;      我是一个模态框      &lt;button @click=&quot;showDialog = false&quot;&gt;关闭&lt;/button&gt;      &lt;child-component :msg=&quot;msg&quot;&gt;&lt;/child-component&gt;    &lt;/div&gt;  &lt;/teleport&gt;&lt;/template&gt;&lt;script&gt;export default {  data() {    return {      showDialog: false,      msg: &quot;hello&quot;    };  },};&lt;/script&gt;
+</code></pre></div><p>这里的Teleport中的modal div就被传送到了body的底部；虽然在不同的地方进行渲染，但是Teleport中的元素和组件还是属于父组件的逻辑子组件，还是可以和父组件进行数据通信。Teleport接收两个参数<code>to</code>和<code>disabled</code>：</p> <ul><li>to - string：必须是有效的查询选择器或 HTMLElement，可以id或者class选择器等。</li> <li>disabled - boolean：如果是true表示禁用teleport的功能，其插槽内容将不会移动到任何位置，默认false不禁用。</li></ul> <h2 id="suspense"><a href="#suspense" class="header-anchor">#</a> Suspense</h2> <p>Suspense是Vue3推出的一个内置组件，它允许我们的程序在等待异步组件时渲染一些后备的内容，可以让我们创建一个平滑的用户体验；Vue中加载异步组件其实在Vue2.x中已经有了，我们用的vue-router中加载的路由组件其实也是一个异步组件：</p> <div class="language- extra-class"><pre class="language-text"><code>export default {  name: &quot;Home&quot;,  components: {    AsyncButton: () =&gt; import(&quot;../components/AsyncButton&quot;),  },}
+</code></pre></div><p>在Vue3中重新定义，异步组件需要通过<code>defineAsyncComponent</code>来进行显示的定义：</p> <div class="language- extra-class"><pre class="language-text"><code>// 全局定义异步组件//src/main.jsimport { defineAsyncComponent } from &quot;vue&quot;;const AsyncButton = defineAsyncComponent(() =&gt;  import(&quot;./components/AsyncButton.vue&quot;));app.component(&quot;AsyncButton&quot;, AsyncButton);// 组件内定义异步组件// src/views/Home.vueimport { defineAsyncComponent } from &quot;vue&quot;;export default {  components: {    AsyncButton: defineAsyncComponent(() =&gt;      import(&quot;../components/AsyncButton&quot;)    ),  },};
+</code></pre></div><p>同时对异步组件的可以进行更精细的管理：</p> <div class="language- extra-class"><pre class="language-text"><code>export default {  components: {    AsyncButton: defineAsyncComponent({      delay: 100,      timeout: 3000,      loader: () =&gt; import(&quot;../components/AsyncButton&quot;),      errorComponent: ErrorComponent,      onError(error, retry, fail, attempts) {        if (attempts &lt;= 3) {          retry();        } else {          fail();        }      },    }),  },};
+</code></pre></div><p>这样我们对异步组件加载情况就能掌控，在加载失败也能重新加载或者展示异常的状态：</p> <p><img src="https://mmbiz.qpic.cn/mmbiz_jpg/zPh0erYjkib2iaLOS83CHnNZONNAZcjoibyrxSZ4t35b8PzYicw6EFuibLSJjVYuzdiaHTZRQjx0qicoQUxZkiaXcXKyibA/640?wx_fmt=jpeg&amp;tp=webp&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1" alt="图片">异步组件加载失败</p> <p>我们回到Suspense，上面说到它主要是在组件加载时渲染一些后备的内容，它提供了两个slot插槽，一个<code>default</code>默认，一个<code>fallback</code>加载中的状态：</p> <div class="language- extra-class"><pre class="language-text"><code>&lt;template&gt;
+  &lt;div&gt;
+    &lt;button @click=&quot;showButton&quot;&gt;展示异步组件&lt;/button&gt;
+    &lt;template v-if=&quot;isShowButton&quot;&gt;
+      &lt;Suspense&gt;
+        &lt;template #default&gt;
+          &lt;AsyncButton&gt;&lt;/AsyncButton&gt;
+        &lt;/template&gt;
+        &lt;template #fallback&gt;
+          &lt;div&gt;组件加载中...&lt;/div&gt;
+        &lt;/template&gt;
+      &lt;/Suspense&gt;
+    &lt;/template&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+&lt;script&gt;
+export default {
+  setup() {
+    const isShowButton = ref(false);
+    function showButton() {
+      isShowButton.value = true;
+    }
+    return {
+      isShowButton,
+      showButton,
+    };
+  },
+}
+&lt;/script&gt;
+</code></pre></div><p><img src="https://mmbiz.qpic.cn/mmbiz_gif/zPh0erYjkib2iaLOS83CHnNZONNAZcjoibyx0py4kuicacDuATMPmkankgePYcn9tu90QpuQLj8I0Tc5EhDDYACYSA/640?wx_fmt=gif&amp;tp=webp&amp;wxfrom=5&amp;wx_lazy=1" alt="图片">异步组件加载显示占位</p> <h1 id="非兼容的功能"><a href="#非兼容的功能" class="header-anchor">#</a> 非兼容的功能</h1> <p>非兼容的功能主要是一些和Vue2.x版本改动较大的语法，已经在Vue3上可能存在兼容问题了。</p> <h2 id="data、mixin和filter"><a href="#data、mixin和filter" class="header-anchor">#</a> data、mixin和filter</h2> <p>在Vue2.x中，我们可以定义data为<code>object</code>或者<code>function</code>，但是我们知道在组件中如果data是object的话会出现数据互相影响，因为object是引用数据类型；</p> <p>在Vue3中，data只接受<code>function</code>类型，通过<code>function</code>返回对象；同时<code>Mixin</code>的合并行为也发生了改变，当mixin和基类中data合并时，会执行浅拷贝合并：</p> <div class="language- extra-class"><pre class="language-text"><code>const Mixin = {
+  data() {
+    return {
+      user: {
+        name: 'Jack',
+        id: 1,
+        address: {
+          prov: 2,
+          city: 3,
+        },
+      }
+    }
+  }
+}
+const Component = {
+  mixins: [Mixin],
+  data() {
+    return {
+      user: {
+        id: 2,
+        address: {
+          prov: 4,
+        },
+      }
+    }
+  }
+}
+
+// vue2结果：
+{
+  id: 2,
+  name: 'Jack',
+  address: {
+    prov: 4,
+    city: 3
+  }
+}
+
+// vue3结果：
+user: {
+  id: 2,
+  address: {
+    prov: 4,
+  },
+}
+</code></pre></div><p>我们看到最后合并的结果，vue2.x会进行深拷贝，对data中的数据向下深入合并拷贝；而vue3只进行浅层拷贝，对data中数据发现已存在就不合并拷贝。</p> <p>在vue2.x中，我们还可以通过<code>过滤器filter</code>来处理一些文本内容的展示：</p> <div class="language- extra-class"><pre class="language-text"><code>&lt;template&gt;
+  &lt;div&gt;{{ status | statusText }}&lt;/div&gt;
+&lt;/template&gt;
+&lt;script&gt;
+  export default {
+    props: {
+      status: {
+        type: Number,
+        default: 1
+      }
+    },
+    filters: {
+      statusText(value){
+        if(value === 1){
+          return '订单未下单'
+        } else if(value === 2){
+          return '订单待支付'
+        } else if(value === 3){
+          return '订单已完成'
+        }
+      }
+    }
+  }
+&lt;/script&gt;
+</code></pre></div><p>最常见的就是处理一些订单的文案展示等；然而在vue3中，过滤器filter已经删除，不再支持了，官方建议使用方法调用或者<code>计算属性computed</code>来进行代替。</p> <h2 id="v-model"><a href="#v-model" class="header-anchor">#</a> v-model</h2> <p>在Vue2.x中，<code>v-model</code>相当于绑定<code>value</code>属性和<code>input</code>事件，它本质也是一个语法糖：</p> <div class="language- extra-class"><pre class="language-text"><code>&lt;child-component v-model=&quot;msg&quot;&gt;&lt;/child-component&gt;
+&lt;!-- 相当于 --&gt;
+&lt;child-component :value=&quot;msg&quot; @input=&quot;msg=$event&quot;&gt;&lt;/child-component&gt;
+</code></pre></div><p>在某些情况下，我们需要对多个值进行双向绑定，其他的值就需要显示的使用回调函数来改变了：</p> <div class="language- extra-class"><pre class="language-text"><code>&lt;child-component 
+    v-model=&quot;msg&quot; 
+    :msg1=&quot;msg1&quot; 
+    @change1=&quot;msg1=$event&quot;
+    :msg2=&quot;msg2&quot; 
+    @change2=&quot;msg2=$event&quot;&gt;
+&lt;/child-component&gt;
+</code></pre></div><p>在vue2.3.0+版本引入了<code>.sync</code>修饰符，其本质也是语法糖，是在组件上绑定<code>@update:propName</code>回调，语法更简洁：</p> <div class="language- extra-class"><pre class="language-text"><code>&lt;child-component 
+    :msg1.sync=&quot;msg1&quot; 
+    :msg2.sync=&quot;msg2&quot;&gt;
+&lt;/child-component&gt;
+
+&lt;!-- 相当于 --&gt;
+
+&lt;child-component 
+    :msg1=&quot;msg1&quot; 
+    @update:msg1=&quot;msg1=$event&quot;
+    :msg2=&quot;msg2&quot;
+    @update:msg2=&quot;msg2=$event&quot;&gt;
+&lt;/child-component&gt;
+</code></pre></div><p>Vue3中将<code>v-model</code>和<code>.sync</code>进行了功能的整合，抛弃了.sync，表示：多个双向绑定value值直接用多个v-model传就好了；同时也将v-model默认传的prop名称由value改成了modelValue：</p> <div class="language- extra-class"><pre class="language-text"><code>&lt;child-component 
+    v-model=&quot;msg&quot;&gt;
+&lt;/child-component&gt;
+
+&lt;!-- 相当于 --&gt;
+&lt;child-component 
+  :modelValue=&quot;msg&quot;
+  @update:modelValue=&quot;msg = $event&quot;&gt;
+&lt;/child-component&gt;
+</code></pre></div><p>如果我们想通过v-model传递多个值，可以将一个<code>argument</code>传递给v-model：</p> <div class="language- extra-class"><pre class="language-text"><code>&lt;child-component 
+    v-model.msg1=&quot;msg1&quot;
+    v-model.msg2=&quot;msg2&quot;&gt;
+&lt;/child-component&gt;
+
+&lt;!-- 相当于 --&gt;
+&lt;child-component 
+    :msg1=&quot;msg1&quot; 
+    @update:msg1=&quot;msg1=$event&quot;
+    :msg2=&quot;msg2&quot;
+    @update:msg2=&quot;msg2=$event&quot;&gt;
+&lt;/child-component&gt;
+</code></pre></div><h2 id="v-for和key"><a href="#v-for和key" class="header-anchor">#</a> v-for和key</h2> <p>在Vue2.x中，我们都知道v-for每次循环都需要给每个子节点一个唯一的key，还不能绑定在template标签上，</p> <div class="language- extra-class"><pre class="language-text"><code>&lt;template v-for=&quot;item in list&quot;&gt;
+  &lt;div :key=&quot;item.id&quot;&gt;...&lt;/div&gt;
+  &lt;span :key=&quot;item.id&quot;&gt;...&lt;/span&gt;
+&lt;/template&gt;
+</code></pre></div><p>而在Vue3中，key值应该被放置在template标签上，这样我们就不用为每个子节点设一遍：</p> <div class="language- extra-class"><pre class="language-text"><code>&lt;template v-for=&quot;item in list&quot; :key=&quot;item.id&quot;&gt;
+  &lt;div&gt;...&lt;/div&gt;
+  &lt;span&gt;...&lt;/span&gt;
+&lt;/template&gt;
+</code></pre></div><h2 id="v-bind合并"><a href="#v-bind合并" class="header-anchor">#</a> v-bind合并</h2> <p>在vue2.x中，如果一个元素同时定义了<code>v-bind=&quot;object&quot;</code>和一个相同的单独的属性，那么这个单独的属性会覆盖<code>object</code>中的绑定：</p> <div class="language- extra-class"><pre class="language-text"><code>&lt;div id=&quot;red&quot; v-bind=&quot;{ id: 'blue' }&quot;&gt;&lt;/div&gt;
+&lt;div v-bind=&quot;{ id: 'blue' }&quot; id=&quot;red&quot;&gt;&lt;/div&gt;
+
+&lt;!-- 最后结果都相同 --&gt;
+&lt;div id=&quot;red&quot;&gt;&lt;/div&gt;
+</code></pre></div><p>然而在vue3中，如果一个元素同时定义了<code>v-bind=&quot;object&quot;</code>和一个相同的单独的属性，那么声明绑定的顺序决定了最后的结果（后者覆盖前者）：</p> <div class="language- extra-class"><pre class="language-text"><code>&lt;!-- template --&gt;
+&lt;div id=&quot;red&quot; v-bind=&quot;{ id: 'blue' }&quot;&gt;&lt;/div&gt;
+&lt;!-- result --&gt;
+&lt;div id=&quot;blue&quot;&gt;&lt;/div&gt;
+
+&lt;!-- template --&gt;
+&lt;div v-bind=&quot;{ id: 'blue' }&quot; id=&quot;red&quot;&gt;&lt;/div&gt;
+&lt;!-- result --&gt;
+&lt;div id=&quot;red&quot;&gt;&lt;/div&gt;
+</code></pre></div><h2 id="v-for中ref"><a href="#v-for中ref" class="header-anchor">#</a> v-for中ref</h2> <p>vue2.x中，在v-for上使用<code>ref</code>属性，通过<code>this.$refs</code>会得到一个数组：</p> <div class="language- extra-class"><pre class="language-text"><code>&lt;template
+  &lt;div v-for=&quot;item in list&quot; :ref=&quot;setItemRef&quot;&gt;&lt;/div&gt;
+&lt;/template&gt;
+&lt;script&gt;
+export default {
+  data(){
+    list: [1, 2]
+  },
+  mounted () {
+    // [div, div]
+    console.log(this.$refs.setItemRef) 
+  }
+}
+&lt;/script&gt;
+</code></pre></div><p>但是这样可能不是我们想要的结果；因此vue3不再自动创建数组，而是将ref的处理方式变为了函数，该函数默认传入该节点：</p> <div class="language- extra-class"><pre class="language-text"><code>&lt;template
+  &lt;div v-for=&quot;item in 3&quot; :ref=&quot;setItemRef&quot;&gt;&lt;/div&gt;
+&lt;/template&gt;
+&lt;script&gt;
+import { reactive, onUpdated } from 'vue'
+export default {
+  setup() {
+    let itemRefs = reactive([])
+
+    const setItemRef = el =&gt; {
+      itemRefs.push(el)
+    }
+
+    onUpdated(() =&gt; {
+      console.log(itemRefs)
+    })
+
+    return {
+      itemRefs,
+      setItemRef
+    }
+  }
+}
+&lt;/script&gt;
+</code></pre></div><h2 id="v-for和v-if优先级"><a href="#v-for和v-if优先级" class="header-anchor">#</a> v-for和v-if优先级</h2> <p>在vue2.x中，在一个元素上同时使用v-for和v-if，<code>v-for</code>有更高的优先级，因此在vue2.x中做性能优化，有一个重要的点就是v-for和v-if不能放在同一个元素上。</p> <p>而在vue3中，<code>v-if</code>比<code>v-for</code>有更高的优先级。因此下面的代码，在vue2.x中能正常运行，但是在vue3中v-if生效时并没有<code>item</code>变量，因此会报错：</p> <div class="language- extra-class"><pre class="language-text"><code>&lt;template&gt;
+  &lt;div v-for=&quot;item in list&quot; v-if=&quot;item % 2 === 0&quot; :key=&quot;item&quot;&gt;{{ item }}&lt;/div&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+export default {
+  data() {
+    return {
+      list: [1, 2, 3, 4, 5],
+    };
+  },
+};
+&lt;/script&gt;
+</code></pre></div><h1 id="总结"><a href="#总结" class="header-anchor">#</a> 总结</h1> <p>以上就是Vue3.0作为终端用的我们可能会涉及到的一些新特性和新功能，其实Vue3.0还有很多的改动，这里由于篇幅原因就不一一展开了，大家可以自行查阅官方文档，期待Vue3能带给我们更便利更友好的开发体验。</p></div> <footer class="page-edit"><!----> <div class="last-updated"><span class="prefix">最近更新时间：:</span> <span class="time">7/16/2021, 5:25:31 PM</span></div></footer> <div class="page-nav"><p class="inner"><span class="prev">
+      ←
+      <a href="/yx_blog/views/vue/performance-optimize.html" class="prev">
+        性能优化
+      </a></span> <span class="next"><a href="/yx_blog/views/vue/vuekey.html">
+        为什么 Vue 中不要用 index 作为 key？（diff 算法详解）
+      </a>
+      →
+    </span></p></div> </main></div><div class="global-ui"><!----></div></div>
+    <script src="/yx_blog/assets/js/app.e0a8f1e5.js" defer></script><script src="/yx_blog/assets/js/2.95e582b3.js" defer></script><script src="/yx_blog/assets/js/30.fb1f60c1.js" defer></script>
+  </body>
+</html>

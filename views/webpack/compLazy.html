@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>路由懒加载的原理 | 杨欣的前端杂记</title>
+    <meta name="generator" content="VuePress 1.9.7">
+    <link rel="icon" href="/yx_blog/imgs/logo.jpg">
+    <meta name="description" content="欢迎来到杨欣的前端杂记">
+    
+    <link rel="preload" href="/yx_blog/assets/css/0.styles.9025f1a7.css" as="style"><link rel="preload" href="/yx_blog/assets/js/app.e0a8f1e5.js" as="script"><link rel="preload" href="/yx_blog/assets/js/2.95e582b3.js" as="script"><link rel="preload" href="/yx_blog/assets/js/34.70dcd269.js" as="script"><link rel="prefetch" href="/yx_blog/assets/js/10.852a3690.js"><link rel="prefetch" href="/yx_blog/assets/js/11.b7d25596.js"><link rel="prefetch" href="/yx_blog/assets/js/12.82266757.js"><link rel="prefetch" href="/yx_blog/assets/js/13.cf1e77f3.js"><link rel="prefetch" href="/yx_blog/assets/js/14.a9e47a7f.js"><link rel="prefetch" href="/yx_blog/assets/js/15.1384f59f.js"><link rel="prefetch" href="/yx_blog/assets/js/16.d5b91b94.js"><link rel="prefetch" href="/yx_blog/assets/js/17.6cab991f.js"><link rel="prefetch" href="/yx_blog/assets/js/18.00aec882.js"><link rel="prefetch" href="/yx_blog/assets/js/19.34034c9c.js"><link rel="prefetch" href="/yx_blog/assets/js/20.8841c49e.js"><link rel="prefetch" href="/yx_blog/assets/js/21.aca8d043.js"><link rel="prefetch" href="/yx_blog/assets/js/22.c40a0d9c.js"><link rel="prefetch" href="/yx_blog/assets/js/23.b24afd47.js"><link rel="prefetch" href="/yx_blog/assets/js/24.be84b6e7.js"><link rel="prefetch" href="/yx_blog/assets/js/25.77357fc0.js"><link rel="prefetch" href="/yx_blog/assets/js/26.8a3d42fc.js"><link rel="prefetch" href="/yx_blog/assets/js/27.70f0fe8a.js"><link rel="prefetch" href="/yx_blog/assets/js/28.c5cf210b.js"><link rel="prefetch" href="/yx_blog/assets/js/29.5ca16a60.js"><link rel="prefetch" href="/yx_blog/assets/js/3.5b12ee6f.js"><link rel="prefetch" href="/yx_blog/assets/js/30.fb1f60c1.js"><link rel="prefetch" href="/yx_blog/assets/js/31.2fbe73e3.js"><link rel="prefetch" href="/yx_blog/assets/js/32.b4d61232.js"><link rel="prefetch" href="/yx_blog/assets/js/33.c87924c5.js"><link rel="prefetch" href="/yx_blog/assets/js/35.633fb91f.js"><link rel="prefetch" href="/yx_blog/assets/js/4.02bdbb3c.js"><link rel="prefetch" href="/yx_blog/assets/js/5.ce292cd4.js"><link rel="prefetch" href="/yx_blog/assets/js/6.5a41d7cc.js"><link rel="prefetch" href="/yx_blog/assets/js/7.0694149e.js"><link rel="prefetch" href="/yx_blog/assets/js/8.ba0d71a7.js"><link rel="prefetch" href="/yx_blog/assets/js/9.f0236701.js">
+    <link rel="stylesheet" href="/yx_blog/assets/css/0.styles.9025f1a7.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/yx_blog/" class="home-link router-link-active"><img src="/yx_blog/imgs/logo.jpg" alt="杨欣的前端杂记" class="logo"> <span class="site-name can-hide">杨欣的前端杂记</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/yx_blog/" class="nav-link">
+  首页
+</a></div><div class="nav-item"><a href="/yx_blog/vue/" class="nav-link">
+  vue及周边
+</a></div><div class="nav-item"><a href="/yx_blog/about/" class="nav-link">
+  关于我
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="好友链接" class="dropdown-title"><span class="title">好友链接</span> <span class="arrow down"></span></button> <button type="button" aria-label="好友链接" class="mobile-dropdown-title"><span class="title">好友链接</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="https://zhuijing.github.io/" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  曹泽鹏的笔记
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-item"><!----> <a href="https://shikkk.github.io/file/" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  石志凯的技术杂货铺
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-item"><!----> <a href="https://zhangjy1994.github.io/webnotes/" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  张佳宇的笔记
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li></ul></div></div> <!----></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/yx_blog/" class="nav-link">
+  首页
+</a></div><div class="nav-item"><a href="/yx_blog/vue/" class="nav-link">
+  vue及周边
+</a></div><div class="nav-item"><a href="/yx_blog/about/" class="nav-link">
+  关于我
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="好友链接" class="dropdown-title"><span class="title">好友链接</span> <span class="arrow down"></span></button> <button type="button" aria-label="好友链接" class="mobile-dropdown-title"><span class="title">好友链接</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="https://zhuijing.github.io/" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  曹泽鹏的笔记
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-item"><!----> <a href="https://shikkk.github.io/file/" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  石志凯的技术杂货铺
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-item"><!----> <a href="https://zhangjy1994.github.io/webnotes/" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  张佳宇的笔记
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li></ul></div></div> <!----></nav>  <ul class="sidebar-links"><li><section class="sidebar-group depth-0"><a href="/yx_blog/interview/" class="sidebar-heading clickable"><span>前言</span> <!----></a> <ul class="sidebar-links sidebar-group-items"><li><a href="/yx_blog/interview.html" class="sidebar-link">创建博客目的</a></li></ul></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>Interview</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>Html</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>Css</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>JavaScript</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>Vue</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>React</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading open"><span>Webpack</span> <span class="arrow down"></span></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/yx_blog/views/webpack/base.html" class="sidebar-link">Webpack</a></li><li><a href="/yx_blog/views/webpack/compLazy.html" aria-current="page" class="active sidebar-link">路由懒加载的原理</a><ul class="sidebar-sub-headers"></ul></li></ul></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>小程序</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>浏览器&amp;Http</span> <span class="arrow right"></span></p> <!----></section></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="路由懒加载的原理"><a href="#路由懒加载的原理" class="header-anchor">#</a> 路由懒加载的原理</h1> <p><strong>作者：红尘炼心 来源：掘金</strong> <strong>链接：<a href="https://juejin.cn/post/6844904180285456398" target="_blank" rel="noopener noreferrer">https://juejin.cn/post/6844904180285456398<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></strong></p> <p>路由懒加载也可以叫做路由组件懒加载，最常用的是通过<code>import()</code>来实现它。</p> <div class="language-js extra-class"><pre class="language-js"><code><span class="token keyword">function</span> <span class="token function">load</span><span class="token punctuation">(</span><span class="token parameter">component</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token keyword">import</span><span class="token punctuation">(</span><span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">views/</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>component<span class="token interpolation-punctuation punctuation">}</span></span><span class="token template-punctuation string">`</span></span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+
+</code></pre></div><p>然后通过Webpack编译打包后，会把每个路由组件的代码分割成一一个js文件，初始化时不会加载这些js文件，只当激活路由组件才会去加载对应的js文件。</p> <p>在这里先不管Webpack是怎么按路由组件分割代码，只管在Webpack编译后，怎么实现按需加载对应的路由组件js文件。</p> <h3 id="一、准备工作"><a href="#一、准备工作" class="header-anchor">#</a> 一、准备工作</h3> <h4 id="_1、搭建项目"><a href="#_1、搭建项目" class="header-anchor">#</a> 1、搭建项目</h4> <p>想要理解路由懒加载的原理，建议从最简单的项目开始，用Vue Cli3搭建一个项目，其中只包含一个路由组件。在main.js只引入vue-router，其它统统不要。</p> <p>main.js</p> <div class="language-js extra-class"><pre class="language-js"><code><span class="token keyword">import</span> Vue <span class="token keyword">from</span> <span class="token string">'vue'</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> App <span class="token keyword">from</span> <span class="token string">'./App.vue'</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> Router <span class="token keyword">from</span> <span class="token string">'vue-router'</span><span class="token punctuation">;</span>
+Vue<span class="token punctuation">.</span><span class="token function">use</span><span class="token punctuation">(</span>Router<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">//路由懒加载</span>
+<span class="token keyword">function</span> <span class="token function">load</span><span class="token punctuation">(</span><span class="token parameter">component</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token keyword">import</span><span class="token punctuation">(</span><span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">views/</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>component<span class="token interpolation-punctuation punctuation">}</span></span><span class="token template-punctuation string">`</span></span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+<span class="token comment">// 路由配置</span>
+<span class="token keyword">const</span> router <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Router</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+    <span class="token literal-property property">mode</span><span class="token operator">:</span> <span class="token string">'history'</span><span class="token punctuation">,</span>
+    <span class="token literal-property property">base</span><span class="token operator">:</span> process<span class="token punctuation">.</span>env<span class="token punctuation">.</span><span class="token constant">BASE_URL</span><span class="token punctuation">,</span>
+    <span class="token literal-property property">routes</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+        <span class="token punctuation">{</span>
+            <span class="token literal-property property">path</span><span class="token operator">:</span> <span class="token string">'/'</span><span class="token punctuation">,</span>
+            <span class="token literal-property property">name</span><span class="token operator">:</span> <span class="token string">'home'</span><span class="token punctuation">,</span>
+            <span class="token literal-property property">component</span><span class="token operator">:</span> <span class="token function">load</span><span class="token punctuation">(</span><span class="token string">'Home'</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+            <span class="token literal-property property">meta</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+                <span class="token literal-property property">title</span><span class="token operator">:</span> <span class="token string">'首页'</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token punctuation">]</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">new</span> <span class="token class-name">Vue</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+    router<span class="token punctuation">,</span>
+    <span class="token function-variable function">render</span><span class="token operator">:</span> <span class="token parameter">h</span> <span class="token operator">=&gt;</span> <span class="token function">h</span><span class="token punctuation">(</span>App<span class="token punctuation">)</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">$mount</span><span class="token punctuation">(</span><span class="token string">'#app'</span><span class="token punctuation">)</span>
+
+</code></pre></div><p>views/Home.vue</p> <div class="language-vue extra-class"><pre class="language-vue"><code><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>template</span><span class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span><span class="token punctuation">&gt;</span></span>
+        {{tip}}
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>template</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span><span class="token punctuation">&gt;</span></span><span class="token script"><span class="token language-javascript">
+<span class="token keyword">export</span> <span class="token keyword">default</span> <span class="token punctuation">{</span>
+    <span class="token function">data</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token punctuation">{</span>
+            <span class="token literal-property property">tip</span><span class="token operator">:</span><span class="token string">'欢迎使用Vue项目'</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">&gt;</span></span>
+
+</code></pre></div><h4 id="_2、webpackchunkname"><a href="#_2、webpackchunkname" class="header-anchor">#</a> 2、webpackChunkName</h4> <p>利用<a href="https://webpack.docschina.org/api/module-methods/#magic-comments" target="_blank" rel="noopener noreferrer">webpackChunkName<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a>，使编译打包后的js文件名字能和路由组件一一对应,修改一下load函数。</p> <div class="language-js extra-class"><pre class="language-js"><code><span class="token keyword">function</span> <span class="token function">load</span><span class="token punctuation">(</span><span class="token parameter">component</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token keyword">import</span><span class="token punctuation">(</span><span class="token comment">/* webpackChunkName: &quot;[request]&quot; */</span> <span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">views/</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>component<span class="token interpolation-punctuation punctuation">}</span></span><span class="token template-punctuation string">`</span></span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+
+</code></pre></div><h4 id="_3、去掉代码压缩混淆"><a href="#_3、去掉代码压缩混淆" class="header-anchor">#</a> 3、去掉代码压缩混淆</h4> <p>去掉代码压缩混淆，便于我们阅读编译打包后的代码。在vue.config.js中配置</p> <div class="language-js extra-class"><pre class="language-js"><code>module<span class="token punctuation">.</span>exports<span class="token operator">=</span><span class="token punctuation">{</span>
+    <span class="token function-variable function">chainWebpack</span><span class="token operator">:</span><span class="token parameter">config</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+        config<span class="token punctuation">.</span>optimization<span class="token punctuation">.</span><span class="token function">minimize</span><span class="token punctuation">(</span><span class="token boolean">false</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+<span class="token punctuation">}</span>
+
+</code></pre></div><h4 id="_4、npm-run-build"><a href="#_4、npm-run-build" class="header-anchor">#</a> 4、npm run build</h4> <p>执行命令<code>npm run build</code>，编译打包后的dist文件结构如下所示</p> <p><img src="https://user-gold-cdn.xitu.io/2020/6/3/1727ad433ff01674?imageView2/0/w/1280/h/960/format/webp/ignore-error/1" alt="img"></p> <p>其中Home.67f3cd34.js就是路由组件Home.vue编译打包后对应的js文件。</p> <h3 id="二、分析index-html"><a href="#二、分析index-html" class="header-anchor">#</a> 二、分析index.html</h3> <p><img src="https://user-gold-cdn.xitu.io/2020/6/1/172705177cb52ad6?imageView2/0/w/1280/h/960/format/webp/ignore-error/1" alt="img"> 从上面我们可以看到，先用link定义Home.js、app.js、chunk-vendors.js这些资源和web客户端的关系。</p> <ul><li><code>ref=preload</code>：告诉浏览器这个资源要给我提前加载。</li> <li><code>rel=prefetch</code>：告诉浏览器这个资源空闲的时候给我加载一下。</li> <li><code>as=script</code>：告诉浏览器这个资源是script，提升加载的优先级。</li></ul> <p>然后在body里面加载了chunk-vendors.js、app.js这两个js资源。可以看出web客户端初始化时候就加载了这个两个js资源。</p> <h3 id="三、分析chunk-vendors-js"><a href="#三、分析chunk-vendors-js" class="header-anchor">#</a> 三、分析chunk-vendors.js</h3> <p>chunk-vendors.js可以称为项目公共模块集合，代码精简后如下所示，</p> <div class="language-js extra-class"><pre class="language-js"><code><span class="token punctuation">(</span>window<span class="token punctuation">[</span><span class="token string">&quot;webpackJsonp&quot;</span><span class="token punctuation">]</span> <span class="token operator">=</span> window<span class="token punctuation">[</span><span class="token string">&quot;webpackJsonp&quot;</span><span class="token punctuation">]</span> <span class="token operator">||</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token punctuation">[</span><span class="token string">&quot;chunk-vendors&quot;</span><span class="token punctuation">]</span><span class="token punctuation">,</span><span class="token punctuation">{</span>
+    <span class="token string-property property">&quot;01f9&quot;</span><span class="token operator">:</span><span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">module<span class="token punctuation">,</span>exports<span class="token punctuation">,</span>__webpack_require__</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token operator">...</span><span class="token comment">//省略</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span>
+    <span class="token operator">...</span><span class="token comment">//省略</span>
+<span class="token punctuation">}</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+
+</code></pre></div><p>从代码中可以看出，执行chunk-vendors.js，仅仅把下面这个数组<code>push</code>到<code>window[&quot;webpackJsonp&quot;]</code>中，而数组第二项是个对象，对象的每个value值是一个函数表达式，不会执行。就这样结束了，当然不是，我们带着<code>window[&quot;webpackJsonp&quot;]</code>去app.js中找找。</p> <h3 id="四、分析app-js"><a href="#四、分析app-js" class="header-anchor">#</a> 四、分析app.js</h3> <p>app.js可以称为项目的入口文件。</p> <p>app.js里面是一个自执行函数，通过搜索<code>window[&quot;webpackJsonp&quot;]</code>可以找到如下相关代码。</p> <div class="language-js extra-class"><pre class="language-js"><code><span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">modules</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+    <span class="token comment">//省略...</span>
+    <span class="token keyword">var</span> jsonpArray <span class="token operator">=</span> window<span class="token punctuation">[</span><span class="token string">&quot;webpackJsonp&quot;</span><span class="token punctuation">]</span> <span class="token operator">=</span> window<span class="token punctuation">[</span><span class="token string">&quot;webpackJsonp&quot;</span><span class="token punctuation">]</span> <span class="token operator">||</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+    <span class="token keyword">var</span> oldJsonpFunction <span class="token operator">=</span> jsonpArray<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">.</span><span class="token function">bind</span><span class="token punctuation">(</span>jsonpArray<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    jsonpArray<span class="token punctuation">.</span>push <span class="token operator">=</span> webpackJsonpCallback<span class="token punctuation">;</span>
+    jsonpArray <span class="token operator">=</span> jsonpArray<span class="token punctuation">.</span><span class="token function">slice</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">var</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> jsonpArray<span class="token punctuation">.</span>length<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token function">webpackJsonpCallback</span><span class="token punctuation">(</span>jsonpArray<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">var</span> parentJsonpFunction <span class="token operator">=</span> oldJsonpFunction<span class="token punctuation">;</span>
+    <span class="token comment">//省略...</span>
+<span class="token punctuation">}</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+    <span class="token number">0</span><span class="token operator">:</span><span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">module<span class="token punctuation">,</span> exports<span class="token punctuation">,</span> __webpack_require__</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        module<span class="token punctuation">.</span>exports <span class="token operator">=</span> <span class="token function">__webpack_require__</span><span class="token punctuation">(</span><span class="token string">&quot;56d7&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span>
+    <span class="token comment">//省略...</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+</code></pre></div><ul><li>先把<code>window[&quot;webpackJsonp&quot;]</code>赋值给<code>jsonpArray</code>。</li> <li>把<code>jsonpArray</code>的<code>push</code>方法赋值给<code>oldJsonpFunction</code>。</li> <li>用<code>webpackJsonpCallback</code>函数拦截<code>jsopArray</code>的<code>push</code>方法，也就是说调用<code>window[&quot;webpackJsonp&quot;]</code>的<code>push</code>方法都会执行<code>webpackJsonpCallback</code>函数。</li> <li>将<code>jsonpArray</code>浅拷贝一下再赋值给<code>jsonpArray</code>。</li> <li>因为执行chunk-vendors.js中的<code>window[&quot;webpackJsonp&quot;].push</code>时<code>push</code>方法还未被<code>webpackJsonpCallback</code>函数拦截，所以要循环<code>jsonpArray</code>，将每项作为参数传入<code>webpackJsonpCallback</code>函数并调用。</li> <li>将<code>jsonpArray</code>的<code>push</code>方法再赋值给<code>parentJsonpFunction</code>。</li></ul> <h4 id="_1、webpackjsonpcallback函数"><a href="#_1、webpackjsonpcallback函数" class="header-anchor">#</a> 1、webpackJsonpCallback函数</h4> <p>接下来我们看一下<code>webpackJsonpCallback</code>这个函数。</p> <div class="language-js extra-class"><pre class="language-js"><code><span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">modules</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+    <span class="token keyword">function</span> <span class="token function">webpackJsonpCallback</span><span class="token punctuation">(</span><span class="token parameter">data</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">var</span> chunkIds <span class="token operator">=</span> data<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+        <span class="token keyword">var</span> moreModules <span class="token operator">=</span> data<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+        <span class="token keyword">var</span> executeModules <span class="token operator">=</span> data<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+        <span class="token keyword">var</span> moduleId<span class="token punctuation">,</span> chunkId<span class="token punctuation">,</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">,</span> resolves <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> chunkIds<span class="token punctuation">.</span>length<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            chunkId <span class="token operator">=</span> chunkIds<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">;</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token class-name">Object</span><span class="token punctuation">.</span>prototype<span class="token punctuation">.</span><span class="token function">hasOwnProperty</span><span class="token punctuation">.</span><span class="token function">call</span><span class="token punctuation">(</span>installedChunks<span class="token punctuation">,</span> chunkId<span class="token punctuation">)</span>
+            <span class="token operator">&amp;&amp;</span> installedChunks<span class="token punctuation">[</span>chunkId<span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                resolves<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>installedChunks<span class="token punctuation">[</span>chunkId<span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+            installedChunks<span class="token punctuation">[</span>chunkId<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">for</span> <span class="token punctuation">(</span>moduleId <span class="token keyword">in</span> moreModules<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token class-name">Object</span><span class="token punctuation">.</span>prototype<span class="token punctuation">.</span><span class="token function">hasOwnProperty</span><span class="token punctuation">.</span><span class="token function">call</span><span class="token punctuation">(</span>moreModules<span class="token punctuation">,</span> moduleId<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                modules<span class="token punctuation">[</span>moduleId<span class="token punctuation">]</span> <span class="token operator">=</span> moreModules<span class="token punctuation">[</span>moduleId<span class="token punctuation">]</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>parentJsonpFunction<span class="token punctuation">)</span> <span class="token function">parentJsonpFunction</span><span class="token punctuation">(</span>data<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">while</span> <span class="token punctuation">(</span>resolves<span class="token punctuation">.</span>length<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            resolves<span class="token punctuation">.</span><span class="token function">shift</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        deferredModules<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">.</span><span class="token function">apply</span><span class="token punctuation">(</span>deferredModules<span class="token punctuation">,</span> executeModules <span class="token operator">||</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> <span class="token function">checkDeferredModules</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span><span class="token punctuation">;</span>
+    <span class="token keyword">var</span> installedChunks <span class="token operator">=</span> <span class="token punctuation">{</span>
+        <span class="token string-property property">&quot;app&quot;</span><span class="token operator">:</span> <span class="token number">0</span>
+    <span class="token punctuation">}</span><span class="token punctuation">;</span>
+    <span class="token comment">//省略...</span>
+<span class="token punctuation">}</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+    <span class="token number">0</span><span class="token operator">:</span><span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">module<span class="token punctuation">,</span> exports<span class="token punctuation">,</span> __webpack_require__</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        module<span class="token punctuation">.</span>exports <span class="token operator">=</span> <span class="token function">__webpack_require__</span><span class="token punctuation">(</span><span class="token string">&quot;56d7&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span>
+    <span class="token comment">//省略...</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+</code></pre></div><p>想知道<code>webpackJsonpCallback</code>函数有什么作用，要先弄明白<code>modules</code>、<code>installedChunks</code>、<code>deferredModules</code>这三个变量的作用。</p> <ul><li>module是指任意的代码块，chunk是webpack处理过程中被分组的module的合集。</li> <li><code>modules</code>缓存所有的module（代码块），调用<code>modules</code>中的module就可以执行里面的代码。</li> <li><code>installedChunks</code>缓存所有chunk的加载状态，如果<code>installedChunks[chunk]</code>为0，代表chunk已经加载完毕。</li> <li><code>deferredModules</code>中每项也是一个数组，例如<code>[module,chunk1,chunk2,chunk3]</code>,其作用是如果要执行module，必须在chunk1、chunk2、chunk3都加载完毕后才能执行。</li></ul> <p><code>if (parentJsonpFunction) parentJsonpFunction(data)</code>这句代码在多入口项目中才有作用，在前面提到过<code>jsonpArray</code>的<code>push</code>方法被赋值给<code>parentJsonpFunction</code>，调用<code>parentJsonpFunction</code>是真正把chunk中push方法中的参数push到<code>window[&quot;webpackJsonp&quot;]</code>这个数组中。</p> <p>比如说现在项目有两个入口，app.js和app1.js，app.js中缓存一些module，在app1.js就可以通过<code>window[&quot;webpackJsonp&quot;]</code>来调用这些module，调用代码如下。</p> <div class="language- extra-class"><pre class="language-text"><code>for (var i = 0; i &lt; jsonpArray.length; i++) webpackJsonpCallback(jsonpArray[i]);
+
+</code></pre></div><p>再来理解<code>webpackJsonpCallback</code>函数是不是清楚了很多，接下来看一下<code>checkDeferredModules</code>这个函数。</p> <h4 id="_2、checkdeferredmodules函数"><a href="#_2、checkdeferredmodules函数" class="header-anchor">#</a> 2、checkDeferredModules函数</h4> <div class="language- extra-class"><pre class="language-text"><code>var deferredModules = [];
+var installedChunks = {
+    &quot;app&quot;: 0
+}
+function checkDeferredModules() {
+    var result;
+    for (var i = 0; i &lt; deferredModules.length; i++) {
+        var deferredModule = deferredModules[i];
+        var fulfilled = true;
+        for (var j = 1; j &lt; deferredModule.length; j++) {
+            var depId = deferredModule[j];
+            if (installedChunks[depId] !== 0) fulfilled = false;
+        }
+        if (fulfilled) {
+            deferredModules.splice(i--, 1);
+            result = __webpack_require__(__webpack_require__.s = deferredModule[0]);
+        }
+    }
+    return result;
+}
+
+</code></pre></div><ul><li>循环<code>deferredModules</code>，创建变量<code>fulfilled</code>表示<code>deferredModule</code>中的chunk加载情况，<code>true</code>表示全部加载完毕，<code>false</code>表示未全部加载完毕。</li> <li>从<code>j=1</code>开始循环<code>deferredModule</code>中的chunk，因为<code>deferredModule[0]</code>是module，如果<code>installedChunks[chunk]!==0</code>，则这个chunk未加载完毕，把变量<code>fulfilled</code>设置为<code>false</code>。循环结束后返回result。</li> <li>经循环<code>deferredModule</code>中的chunk并判断chunk的加载状态后，<code>fulfilled</code>还是为true，则调用<code>__webpack_require__</code>函数，将<code>deferredModule[0]</code>（module）作为参数传入执行。</li> <li><code>deferredModules.splice(i--, 1)</code>,删除满足条件的deferredModule，并将i减一，其中<code>i--</code>是先使用i，然后在减一。</li></ul> <p>因为在<code>webpackJsonpCallback</code>函数中<code>deferredModules</code>为<code>[]</code>，所以回到主体函数继续往下看。</p> <div class="language- extra-class"><pre class="language-text"><code>deferredModules.push([0, &quot;chunk-vendors&quot;]);
+return checkDeferredModules();
+
+</code></pre></div><p>按上面逻辑分析后，会执行<code>__webpack_require__(0)</code>,那么来看一下<code>__webpack_require__</code>这个函数。</p> <h4 id="_3、-webpack-require-函数"><a href="#_3、-webpack-require-函数" class="header-anchor">#</a> 3、__webpack_require__函数</h4> <div class="language- extra-class"><pre class="language-text"><code>var installedModules = {};
+function __webpack_require__(moduleId) {
+    if (installedModules[moduleId]) {
+        return installedModules[moduleId].exports;
+    }
+    var module = installedModules[moduleId] = {
+        i: moduleId,
+        l: false,
+        exports: {}
+    };
+    modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+    module.l = true;
+    return module.exports;
+}
+
+</code></pre></div><p>从代码可知<code>__webpack_require__</code>就是一个执行module的方法。</p> <ul><li><code>installedModules</code>用来缓存module的执行状态。</li> <li>通过moduleId在modules（在<code>webpackJsonpCallback</code>函数中缓存所有module的集合）获取对应的module用call方法执行。</li> <li>将执行结果赋值到module.exports并返回。</li></ul> <p>所以执行<code>__webpack_require__(0)</code>,其实就是执行下面的代码。</p> <div class="language- extra-class"><pre class="language-text"><code>(function (module, exports, __webpack_require__) {
+    module.exports = __webpack_require__(&quot;56d7&quot;);
+}),
+
+</code></pre></div><p>在里面又用<code>__webpack_require__</code>执行id为56d7的module，我们找到对应的module继续看，看一下里面关键的代码片段。</p> <div class="language- extra-class"><pre class="language-text"><code>function load(component) {
+    return function () {
+        return __webpack_require__(&quot;9dac&quot;)(&quot;./&quot;.concat(component));
+    };
+}
+var routes = [{
+    path: '/',
+    name: 'home',
+    component: load('Home'),
+    meta: {
+        title: '首页'
+    }
+}, {
+    path: '*',
+    redirect: {
+        path: '/'
+    }
+}];
+
+</code></pre></div><p>看到这里是不是非常熟悉了，就是配置路由的地方。<code>load</code>还是作为加载路由组件的函数，里面用<code>__webpack_require__(&quot;9dac&quot;)</code>返回的方法来执行加载路由组件，我们来看一下<code>__webpack_require__(&quot;9dac&quot;)</code>。</p> <div class="language- extra-class"><pre class="language-text"><code>(function (module, exports, __webpack_require__) {
+    var map = {
+        &quot;./Home&quot;: [
+            &quot;bb51&quot;,
+            &quot;Home&quot;
+        ],
+        &quot;./Home.vue&quot;: [
+            &quot;bb51&quot;,
+            &quot;Home&quot;
+        ]
+    };
+    function webpackAsyncContext(req) {
+        if (!__webpack_require__.o(map, req)) {
+            return Promise.resolve().then(function () {
+                var e = new Error(&quot;Cannot find module '&quot; + req + &quot;'&quot;);
+                e.code = 'MODULE_NOT_FOUND';
+                throw e;
+            });
+        }
+        var ids = map[req], id = ids[0];
+        return __webpack_require__.e(ids[1]).then(function () {
+            return __webpack_require__(id);
+        });
+    }
+    webpackAsyncContext.keys = function webpackAsyncContextKeys() {
+        return Object.keys(map);
+    };
+    webpackAsyncContext.id = &quot;9dac&quot;;
+    module.exports = webpackAsyncContext;
+})
+
+</code></pre></div><h4 id="_4、webpackasynccontext函数"><a href="#_4、webpackasynccontext函数" class="header-anchor">#</a> 4、webpackAsyncContext函数</h4> <p>其中的关键函数为<code>webpackAsyncContext</code>,调用<code>load('Home')</code>时，<code>req</code>为<code>'./Home'</code>，<code>__webpack_require__.o</code>方法为</p> <div class="language- extra-class"><pre class="language-text"><code>__webpack_require__.o = function (object, property) {
+    return Object.prototype.hasOwnProperty.call(object, property);
+};
+
+</code></pre></div><p>这个方法就是判断在变量<code>map</code>中有没有key为<code>./Home</code>的项，如果没有抛出<code>Cannot find module './Home'</code>的错误。有执行<code>__webpack_require__.e</code>方法，参数为<code>Home</code>。</p> <h4 id="_5、webpack-require-e方法"><a href="#_5、webpack-require-e方法" class="header-anchor">#</a> 5、<strong>webpack_require</strong>.e方法</h4> <div class="language-js extra-class"><pre class="language-js"><code><span class="token keyword">var</span> installedChunks <span class="token operator">=</span> <span class="token punctuation">{</span>
+    <span class="token string-property property">&quot;app&quot;</span><span class="token operator">:</span> <span class="token number">0</span>
+<span class="token punctuation">}</span>
+__webpack_require__<span class="token punctuation">.</span>p <span class="token operator">=</span> <span class="token string">&quot;/&quot;</span><span class="token punctuation">;</span>
+<span class="token keyword">function</span> <span class="token function">jsonpScriptSrc</span><span class="token punctuation">(</span><span class="token parameter">chunkId</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> __webpack_require__<span class="token punctuation">.</span>p <span class="token operator">+</span> <span class="token string">&quot;js/&quot;</span> <span class="token operator">+</span> <span class="token punctuation">(</span><span class="token punctuation">{</span> <span class="token string-property property">&quot;Home&quot;</span><span class="token operator">:</span> <span class="token string">&quot;Home&quot;</span> <span class="token punctuation">}</span><span class="token punctuation">[</span>chunkId<span class="token punctuation">]</span> <span class="token operator">||</span> chunkId<span class="token punctuation">)</span> <span class="token operator">+</span>
+    <span class="token string">&quot;.&quot;</span> <span class="token operator">+</span> <span class="token punctuation">{</span> <span class="token string-property property">&quot;Home&quot;</span><span class="token operator">:</span> <span class="token string">&quot;37ee624e&quot;</span> <span class="token punctuation">}</span><span class="token punctuation">[</span>chunkId<span class="token punctuation">]</span> <span class="token operator">+</span> <span class="token string">&quot;.js&quot;</span>
+<span class="token punctuation">}</span>
+__webpack_require__<span class="token punctuation">.</span><span class="token function-variable function">e</span> <span class="token operator">=</span> <span class="token keyword">function</span> <span class="token function">requireEnsure</span><span class="token punctuation">(</span><span class="token parameter">chunkId</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">var</span> promises <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+    <span class="token keyword">var</span> installedChunkData <span class="token operator">=</span> installedChunks<span class="token punctuation">[</span>chunkId<span class="token punctuation">]</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>installedChunkData <span class="token operator">!==</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>installedChunkData<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            promises<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>installedChunkData<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+            <span class="token keyword">var</span> promise <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Promise</span><span class="token punctuation">(</span><span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token parameter">resolve<span class="token punctuation">,</span> reject</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                installedChunkData <span class="token operator">=</span> installedChunks<span class="token punctuation">[</span>chunkId<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">[</span>resolve<span class="token punctuation">,</span> reject<span class="token punctuation">]</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            promises<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>installedChunkData<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span> <span class="token operator">=</span> promise<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">var</span> script <span class="token operator">=</span> document<span class="token punctuation">.</span><span class="token function">createElement</span><span class="token punctuation">(</span><span class="token string">'script'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">var</span> onScriptComplete<span class="token punctuation">;</span>
+            script<span class="token punctuation">.</span>charset <span class="token operator">=</span> <span class="token string">'utf-8'</span><span class="token punctuation">;</span>
+            script<span class="token punctuation">.</span>timeout <span class="token operator">=</span> <span class="token number">120</span><span class="token punctuation">;</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>__webpack_require__<span class="token punctuation">.</span>nc<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                script<span class="token punctuation">.</span><span class="token function">setAttribute</span><span class="token punctuation">(</span><span class="token string">&quot;nonce&quot;</span><span class="token punctuation">,</span> __webpack_require__<span class="token punctuation">.</span>nc<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+            script<span class="token punctuation">.</span>src <span class="token operator">=</span> <span class="token function">jsonpScriptSrc</span><span class="token punctuation">(</span>chunkId<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">var</span> error <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Error</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token function-variable function">onScriptComplete</span> <span class="token operator">=</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token parameter">event</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                <span class="token comment">// 避免IE内存泄漏。</span>
+                script<span class="token punctuation">.</span>onerror <span class="token operator">=</span> script<span class="token punctuation">.</span>onload <span class="token operator">=</span> <span class="token keyword">null</span><span class="token punctuation">;</span>
+                <span class="token function">clearTimeout</span><span class="token punctuation">(</span>timeout<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token keyword">var</span> chunk <span class="token operator">=</span> installedChunks<span class="token punctuation">[</span>chunkId<span class="token punctuation">]</span><span class="token punctuation">;</span>
+                <span class="token keyword">if</span> <span class="token punctuation">(</span>chunk <span class="token operator">!==</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                    <span class="token keyword">if</span> <span class="token punctuation">(</span>chunk<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                        <span class="token keyword">var</span> errorType <span class="token operator">=</span> event <span class="token operator">&amp;&amp;</span> 
+                        <span class="token punctuation">(</span>event<span class="token punctuation">.</span>type <span class="token operator">===</span> <span class="token string">'load'</span> <span class="token operator">?</span> <span class="token string">'missing'</span> <span class="token operator">:</span> event<span class="token punctuation">.</span>type<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                        <span class="token keyword">var</span> realSrc <span class="token operator">=</span> event <span class="token operator">&amp;&amp;</span> event<span class="token punctuation">.</span>target <span class="token operator">&amp;&amp;</span> event<span class="token punctuation">.</span>target<span class="token punctuation">.</span>src<span class="token punctuation">;</span>
+                        error<span class="token punctuation">.</span>message <span class="token operator">=</span> <span class="token string">'Loading chunk '</span> <span class="token operator">+</span> chunkId 
+                        <span class="token operator">+</span> <span class="token string">' failed.\n('</span> <span class="token operator">+</span> errorType <span class="token operator">+</span> <span class="token string">': '</span> <span class="token operator">+</span> realSrc <span class="token operator">+</span> <span class="token string">')'</span><span class="token punctuation">;</span>
+                        error<span class="token punctuation">.</span>name <span class="token operator">=</span> <span class="token string">'ChunkLoadError'</span><span class="token punctuation">;</span>
+                        error<span class="token punctuation">.</span>type <span class="token operator">=</span> errorType<span class="token punctuation">;</span>
+                        error<span class="token punctuation">.</span>request <span class="token operator">=</span> realSrc<span class="token punctuation">;</span>
+                        chunk<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">(</span>error<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                    <span class="token punctuation">}</span>
+                    installedChunks<span class="token punctuation">[</span>chunkId<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token keyword">undefined</span><span class="token punctuation">;</span>
+                <span class="token punctuation">}</span>
+            <span class="token punctuation">}</span><span class="token punctuation">;</span>
+            <span class="token keyword">var</span> timeout <span class="token operator">=</span> <span class="token function">setTimeout</span><span class="token punctuation">(</span><span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                <span class="token function">onScriptComplete</span><span class="token punctuation">(</span><span class="token punctuation">{</span> <span class="token literal-property property">type</span><span class="token operator">:</span> <span class="token string">'timeout'</span><span class="token punctuation">,</span> <span class="token literal-property property">target</span><span class="token operator">:</span> script <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token number">120000</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            script<span class="token punctuation">.</span>onerror <span class="token operator">=</span> script<span class="token punctuation">.</span>onload <span class="token operator">=</span> onScriptComplete<span class="token punctuation">;</span>
+            document<span class="token punctuation">.</span>head<span class="token punctuation">.</span><span class="token function">appendChild</span><span class="token punctuation">(</span>script<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">return</span> Promise<span class="token punctuation">.</span><span class="token function">all</span><span class="token punctuation">(</span>promises<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+</code></pre></div><p><strong><code>__webpack_require__.e</code>方法是实现懒加载的核心</strong>，在这个方法里面处理了三件事情。</p> <ul><li>使用JSONP模式加载路由对应的js文件，也可以称为chunk。</li> <li>设置chunk加载的三种状态并缓存在<code>installedChunks</code>中，防止chunk重复加载。</li> <li>处理chunk加载超时和加载出错的场景。</li></ul> <p>chunk加载的三种状态</p> <ul><li><code>installedChunks[chunkId]</code>为<code>0</code>，代表该chunk已经加载完毕。</li> <li><code>installedChunks[chunkId]</code>为<code>undefined</code>，代表该chunk加载失败、加载超时、从未加载过。</li> <li><code>installedChunks[chunkId]</code>为<code>Promise</code>对象，代表该chunk正在加载。</li></ul> <p>chunk加载超时处理</p> <div class="language- extra-class"><pre class="language-text"><code>script.timeout = 120;
+var timeout = setTimeout(function () {
+    onScriptComplete({ type: 'timeout', target: script });
+}, 120000);
+
+</code></pre></div><p><code>script.timeout = 120</code>代表该chunk加载120秒后还没加载完毕则超时。 用<code>setTimeout</code>设置个120秒的计时器，在120秒后执行<code>onScriptComplete({ type: 'timeout', target: script })</code>。</p> <p>在看一下<code>onScriptComplete</code>函数</p> <div class="language- extra-class"><pre class="language-text"><code>var onScriptComplete = function (event) {
+    // 避免IE内存泄漏。
+    script.onerror = script.onload = null;
+    clearTimeout(timeout);
+    var chunk = installedChunks[chunkId];
+    if (chunk !== 0) {
+        if (chunk) {
+            var errorType = event &amp;&amp; (event.type === 'load' ? 'missing' : event.type);
+            var realSrc = event &amp;&amp; event.target &amp;&amp; event.target.src;
+            error.message = 'Loading chunk ' + chunkId 
+            + ' failed.\n(' + errorType + ': ' + realSrc + ')';
+            error.name = 'ChunkLoadError';
+            error.type = errorType;
+            error.request = realSrc;
+            chunk[1](error);
+        }
+        installedChunks[chunkId] = undefined;
+    }
+};
+
+</code></pre></div><p>此时chunkId为<code>Home</code>，加载是Home.js,代码是</p> <div class="language- extra-class"><pre class="language-text"><code>(window[&quot;webpackJsonp&quot;] = window[&quot;webpackJsonp&quot;] || []).push([[&quot;Home&quot;],{
+    &quot;bb51&quot;:(function(module, __webpack_exports__, __webpack_require__){
+        //省略...
+    })
+}]))
+
+</code></pre></div><p>在前面有提到<code>window[&quot;webpackJsonp&quot;]</code>的push方法被<code>webpackJsonpCallback</code>函数拦截了，如果Home.js加载成功会自动执行，随后会执行<code>webpackJsonpCallback</code>函数，其中有<code>installedChunks[chunkId] = 0;</code>会把<code>installedChunks['Home']</code>的值置为0。</p> <p>也就是说,如果Home.js加载超时了，就不能执行，就不能将<code>installedChunks['Home']</code>的值置为0，所以此时<code>installedChunks['Home']</code>的值还是<code>Promise</code>对象。那么就会进入以下代码执行，最后<code>chunk[1](error)</code>将错误抛出去。</p> <div class="language- extra-class"><pre class="language-text"><code>var chunk = installedChunks[chunkId];
+if(chunk!==0){
+    if(chunk){
+        var errorType = event &amp;&amp; (event.type === 'load' ? 'missing' : event.type);
+        var realSrc = event &amp;&amp; event.target &amp;&amp; event.target.src;
+        error.message = 'Loading chunk ' + chunkId 
+        + ' failed.\n(' + errorType + ': ' + realSrc + ')';
+        error.name = 'ChunkLoadError';
+        error.type = errorType;
+        error.request = realSrc;
+        chunk[1](error);
+    }
+}
+
+</code></pre></div><p><code>chunk[1]</code>其实就是reject函数，在以下代码中给它赋值的。</p> <div class="language- extra-class"><pre class="language-text"><code>var promise = new Promise(function (resolve, reject) {
+    installedChunkData = installedChunks[chunkId] = [resolve, reject];
+});
+
+</code></pre></div><p>chunk加载失败处理</p> <p>加载失败分为两种情况，一是Home.js资源加载失败，二是资源加载成功了，但是执行Home.js里面代码出错了导致失败，所以chunk加载失败处理的代码要这么写</p> <div class="language- extra-class"><pre class="language-text"><code>script.onerror = script.onload = onScriptComplete;
+
+</code></pre></div><p>后面处理的方式和处理加载超时的一样。</p> <p><code>__webpack_require__.e</code>最后返回是一个<code>Promise</code>对象。回到<code>webpackAsyncContext</code>函数中</p> <div class="language- extra-class"><pre class="language-text"><code>return __webpack_require__.e(ids[1]).then(function () {
+    return __webpack_require__(id);
+});
+
+</code></pre></div><p><code>__webpack_require__.e(ids[1])</code>执行成功后，执行<code>__webpack_require__(id);</code>，此时id为bb51。那么又回到<code>__webpack_require__</code>函数中了。在前面提过<code>__webpack_require__</code>函数的作用就是执行module。id为bb51的nodule是在Home.js内，在<code>webpackJsonpCallback</code>函数有以下代码</p> <div class="language- extra-class"><pre class="language-text"><code>function webpackJsonpCallback(data) {
+    var moreModules = data[1];
+    for (moduleId in moreModules) {
+        if (Object.prototype.hasOwnProperty.call(moreModules, moduleId)) {
+            modules[moduleId] = moreModules[moduleId];
+        }
+    }
+}
+
+</code></pre></div><h3 id="五、分析home-js"><a href="#五、分析home-js" class="header-anchor">#</a> 五、分析Home.js</h3> <p>Home.js</p> <div class="language- extra-class"><pre class="language-text"><code>(window[&quot;webpackJsonp&quot;] = window[&quot;webpackJsonp&quot;] || []).push([[&quot;Home&quot;],{
+    &quot;bb51&quot;:(function(module, __webpack_exports__, __webpack_require__){
+        //省略...
+    })
+}]))
+
+</code></pre></div><p>可以看出moreModules就是<code>{&quot;bb51&quot;:(function(module, __webpack_exports__, __webpack_require__){})}</code>,</p> <p>循环moreModules，把Home.js里面的module缓存到app.js里面的modules中。</p> <p>再看<code>__webpack_require__</code>函数中有这段代码</p> <div class="language- extra-class"><pre class="language-text"><code>modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+
+</code></pre></div><p>这样就执行了Home.js里面的module，在module里面有渲染页面的一系列的方法，就把Home.vue这个路由组件页面渲染出来了。</p></div> <footer class="page-edit"><!----> <div class="last-updated"><span class="prefix">最近更新时间：:</span> <span class="time">7/2/2021, 6:01:08 PM</span></div></footer> <div class="page-nav"><p class="inner"><span class="prev">
+      ←
+      <a href="/yx_blog/views/webpack/base.html" class="prev">
+        Webpack
+      </a></span> <span class="next"><a href="/yx_blog/views/miniprogram/base.html">
+        Html
+      </a>
+      →
+    </span></p></div> </main></div><div class="global-ui"><!----></div></div>
+    <script src="/yx_blog/assets/js/app.e0a8f1e5.js" defer></script><script src="/yx_blog/assets/js/2.95e582b3.js" defer></script><script src="/yx_blog/assets/js/34.70dcd269.js" defer></script>
+  </body>
+</html>
